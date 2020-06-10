@@ -7,3 +7,12 @@
     display: flex;
     overflow-x: scroll;
 }
+
+.navigation-arrow {
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.arrow {
+    margin: 5px 10px;
+}

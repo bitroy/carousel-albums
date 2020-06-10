@@ -56,72 +56,99 @@ const CarouselHome = () => {
 
 const Carousel = () => {
 	const AlbumContext = useContext(CarouselContext);
+	const albums = AlbumContext.albums;
 	const [currentAlbum, setCurrentAlbum] = useState({});
-	const [currentAlbumIndex, setCurrentAlbumIndex] = useState(0);
+	const [currentAlbumIndex, setCurrentAlbumIndex] = useState(1);
 
 	const nextAlbum = () => {
-
+		setCurrentAlbumIndex(prevIndex => prevIndex + 1);
+		setCurrentAlbum({});
 	};
 
 	const previousAlbum = () => {
-
+		setCurrentAlbumIndex(prevIndex => prevIndex - 1);
+		setCurrentAlbum({});
 	};
 
-	const handleSetCurrentAlbum = (index) => {
-		setCurrentAlbum(AlbumContext.albums[`Album_${index+1}`])
-		setCurrentAlbumIndex(index);
+	const handleSetCurrentAlbum = (clickedAlbum) => {
+		// setCurrentAlbum(AlbumContext.albums[`Album_${index+1}`])
+		setCurrentAlbum(clickedAlbum)
 	}
+
+	console.log(`Album_${currentAlbumIndex}`);
 
     return(
 		<div className="carousel-wrapper">
-			{/* <Arrow direction="left" clickArrow={previousAlbum} glyph="&#9664;" /> */}
-				<AlbumSlider albums={AlbumContext.albums} handleSetCurrentAlbum={handleSetCurrentAlbum} /> 
-			{/* <Arrow direction="right" clickArrow={nextAlbum} glyph="&#9654;" /> */}
-			{Object.keys(currentAlbum).length === 0 ? null : <AlbumDetails currentAlbum={currentAlbum} albumIndex={currentAlbumIndex}/>}
+			<div className="navigation-arrow">
+				<Arrow clickArrow={previousAlbum} glyph="&#9664;" />
+				<Arrow clickArrow={nextAlbum} glyph="&#9654;" />
+			</div>
+			{/* <AlbumSlider albums={AlbumContext.albums} handleSetCurrentAlbum={handleSetCurrentAlbum} /> */}
+			<Album currentAlbum={albums[`Album_${currentAlbumIndex}`]} handleSetCurrentAlbum={handleSetCurrentAlbum} />
+			{
+				(Object.keys(currentAlbum).length === 0) ? 
+				null : 
+				<AlbumDetails currentAlbum={currentAlbum} />
+			}
 		</div>			
     );
 };
 
-const Arrow = ({direction, clickArrow, glyph}) => {
+const Arrow = ({clickArrow, glyph}) => {
 	return (
-		<div className="arrow" onClick={clickArrow}>
+		<div className="arrow" onClick={() => clickArrow()}>
 			{glyph}
 		</div>
 	);
 };
 
-const AlbumSlider = ({albums, handleSetCurrentAlbum}) => {
-	let sliderAlbums = [];
-	Object.entries(albums).map((album) => (
-		sliderAlbums.push({
-			"title": album["0"],
-			"photo": album["1"][0]["thumbnailUrl"]
-		})
-	));
+const Album = ({currentAlbum, handleSetCurrentAlbum}) => {
+	let albumThumbnail = {};
+	if(currentAlbum !== null && currentAlbum !== undefined) {
+		albumThumbnail = {
+			"title": currentAlbum[0].title,
+			"photo": currentAlbum[0].thumbnailUrl
+		}
+	}
 
 	return (
-		<div className="carousel">
-			{
-				sliderAlbums.map((album, index) => (
-					<div className="albums" key={index}>
-						<img src={album.photo} alt={album.title} onClick={() => handleSetCurrentAlbum(index)} />
-						<h2>{album.title}</h2>
-					</div>
-				))
-			}
+		<div className="album">
+			<img src={albumThumbnail.photo} alt={albumThumbnail.title} onClick={() => handleSetCurrentAlbum(currentAlbum)}/>
 		</div>
 	);
 };
 
-const AlbumDetails = ({currentAlbum, albumIndex}) => {
+// const AlbumSlider = ({albums, handleSetCurrentAlbum}) => {
+// 	let sliderAlbums = [];
+// 	Object.entries(albums).map((album) => (
+// 		sliderAlbums.push({
+// 			"title": album["0"],
+// 			"photo": album["1"][0]["thumbnailUrl"]
+// 		})
+// 	));
+
+// 	return (
+// 		<div className="carousel">
+// 			{
+// 				sliderAlbums.map((album, index) => (
+// 					<div className="albums" key={index}>
+// 						<img src={album.photo} alt={album.title} onClick={() => handleSetCurrentAlbum(index)} />
+// 						<h2>{album.title}</h2>
+// 					</div>
+// 				))
+// 			}
+// 		</div>
+// 	);
+// };
+
+const AlbumDetails = ({currentAlbum}) => {
 
 	return (
 		<div className="albumdetails">
-			<h2>{`Album_${albumIndex+1}`}</h2>
 			{
 				Object.entries(currentAlbum).map((photo, index) => (	
 					<div key={index}>
-						<h3>{`Photo_${index}`}</h3>
+						<h3>{`Photo_${index+1}`}</h3>
 						<img src={photo["1"].url} alt={photo["1"].title} />
 					</div>
 				))
