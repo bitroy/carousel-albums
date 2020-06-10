@@ -95,7 +95,11 @@ const Carousel = () => {
 				<Arrow clickArrow={nextAlbum} glyph="&#9654;" />
 			</div>
 			{/* <AlbumSlider albums={AlbumContext.albums} handleSetCurrentAlbum={handleSetCurrentAlbum} /> */}
-			<Album currentAlbum={albums[`Album_${currentAlbumIndex}`]} handleSetCurrentAlbum={handleSetCurrentAlbum} />
+			<Album 
+				currentAlbum={albums[`Album_${currentAlbumIndex}`]} 
+				handleSetCurrentAlbum={handleSetCurrentAlbum} 
+				index={currentAlbumIndex}	
+			/>
 			{
 				(Object.keys(currentAlbum).length === 0) ? 
 				null : 
@@ -113,7 +117,7 @@ const Arrow = ({clickArrow, glyph}) => {
 	);
 };
 
-const Album = ({currentAlbum, handleSetCurrentAlbum}) => {
+const Album = ({currentAlbum, handleSetCurrentAlbum, index}) => {
 	let albumThumbnail = {};
 	if(currentAlbum !== null && currentAlbum !== undefined) {
 		albumThumbnail = {
@@ -125,6 +129,7 @@ const Album = ({currentAlbum, handleSetCurrentAlbum}) => {
 	return (
 		<div className="album">
 			<img src={albumThumbnail.photo} alt={albumThumbnail.title} onClick={() => handleSetCurrentAlbum(currentAlbum)}/>
+			<h3>{`Album_${index}`}</h3>
 		</div>
 	);
 };
