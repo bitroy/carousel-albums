@@ -56,22 +56,33 @@ const CarouselHome = () => {
 
 const Carousel = () => {
 	const AlbumContext = useContext(CarouselContext);
-	const albums = AlbumContext.albums;
 	const [currentAlbum, setCurrentAlbum] = useState({});
 	const [currentAlbumIndex, setCurrentAlbumIndex] = useState(1);
 
+	const albums = AlbumContext.albums;
+	const maxAlbums = Object.keys(albums).length;
+
 	const nextAlbum = () => {
-		setCurrentAlbumIndex(prevIndex => prevIndex + 1);
+		if((currentAlbumIndex + 1) > maxAlbums) {
+			setCurrentAlbumIndex(1);
+		} else {
+			setCurrentAlbumIndex(prevIndex => prevIndex + 1);
+		}
+		
 		setCurrentAlbum({});
 	};
 
 	const previousAlbum = () => {
-		setCurrentAlbumIndex(prevIndex => prevIndex - 1);
+		if((currentAlbumIndex - 1) === 0) {
+			setCurrentAlbumIndex(maxAlbums);
+		} else {
+			setCurrentAlbumIndex(prevIndex => prevIndex - 1);
+		}
+		
 		setCurrentAlbum({});
 	};
 
 	const handleSetCurrentAlbum = (clickedAlbum) => {
-		// setCurrentAlbum(AlbumContext.albums[`Album_${index+1}`])
 		setCurrentAlbum(clickedAlbum)
 	}
 
