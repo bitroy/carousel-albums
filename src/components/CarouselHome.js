@@ -1,5 +1,5 @@
 import '../styles/CarouselHome.scss';
-import React, { useState, useEffect, createContext, useContext, useCallback } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import Axios from 'axios';
 
 export const CarouselContext = createContext();
@@ -86,20 +86,23 @@ const Carousel = () => {
 		setCurrentAlbum(clickedAlbum)
 	}
 
-	console.log(`Album_${currentAlbumIndex}`);
-
     return(
 		<div className="carousel-wrapper">
 			<div className="navigation-arrow">
 				<Arrow clickArrow={previousAlbum} glyph="&#9664;" />
 				<Arrow clickArrow={nextAlbum} glyph="&#9654;" />
 			</div>
-			{/* <AlbumSlider albums={AlbumContext.albums} handleSetCurrentAlbum={handleSetCurrentAlbum} /> */}
-			<Album 
+			<AlbumSlider 
+				albums={albums} 
+				handleSetCurrentAlbum={handleSetCurrentAlbum}
+				maxAlbums={maxAlbums}
+				currentAlbumIndex={currentAlbumIndex-1}
+			/>
+			{/* <Album 
 				currentAlbum={albums[`Album_${currentAlbumIndex}`]} 
 				handleSetCurrentAlbum={handleSetCurrentAlbum} 
 				index={currentAlbumIndex}	
-			/>
+			/> */}
 			{
 				(Object.keys(currentAlbum).length === 0) ? 
 				null : 
@@ -117,6 +120,37 @@ const Arrow = ({clickArrow, glyph}) => {
 	);
 };
 
+const AlbumSlider = ({albums, handleSetCurrentAlbum, maxAlbums, currentAlbumIndex}) => {
+	let sliderAlbums = [];
+	Object.entries(albums).map((album) => (
+		sliderAlbums.push({
+			"title": album["0"],
+			"photo": album["1"][0]["thumbnailUrl"]
+		})
+	));
+
+	return (
+		<div className={`album-slider active-album-${currentAlbumIndex}`}>
+			<div 
+				className="album-slider-wrapper"
+				style={{transform:`translateX(-${currentAlbumIndex*(100/maxAlbums)}%)`}}	
+			>
+				{
+					sliderAlbums.map((album, index) => (
+						<div id={`album-${index}`} className='albums' key={index}>
+							<Album 
+								currentAlbum={albums[`Album_${index+1}`]} 
+								handleSetCurrentAlbum={handleSetCurrentAlbum} 
+								index={index+1}	
+							/>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	);
+};
+
 const Album = ({currentAlbum, handleSetCurrentAlbum, index}) => {
 	let albumThumbnail = {};
 	if(currentAlbum !== null && currentAlbum !== undefined) {
@@ -127,35 +161,17 @@ const Album = ({currentAlbum, handleSetCurrentAlbum, index}) => {
 	}
 
 	return (
-		<div className="album">
-			<img src={albumThumbnail.photo} alt={albumThumbnail.title} onClick={() => handleSetCurrentAlbum(currentAlbum)}/>
+		<div className="album" style={{margin: '1rem'}}>
+			<img 
+				src={albumThumbnail.photo} 
+				alt={albumThumbnail.title} 
+				onClick={() => handleSetCurrentAlbum(currentAlbum)}
+				style={{marginTop: "1rem"}}
+			/>
 			<h3>{`Album_${index}`}</h3>
 		</div>
 	);
 };
-
-// const AlbumSlider = ({albums, handleSetCurrentAlbum}) => {
-// 	let sliderAlbums = [];
-// 	Object.entries(albums).map((album) => (
-// 		sliderAlbums.push({
-// 			"title": album["0"],
-// 			"photo": album["1"][0]["thumbnailUrl"]
-// 		})
-// 	));
-
-// 	return (
-// 		<div className="carousel">
-// 			{
-// 				sliderAlbums.map((album, index) => (
-// 					<div className="albums" key={index}>
-// 						<img src={album.photo} alt={album.title} onClick={() => handleSetCurrentAlbum(index)} />
-// 						<h2>{album.title}</h2>
-// 					</div>
-// 				))
-// 			}
-// 		</div>
-// 	);
-// };
 
 const AlbumDetails = ({currentAlbum}) => {
 
