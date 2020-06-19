@@ -1,7 +1,6 @@
 import React from 'react';
 
 const AlbumDetails = ({currentAlbum}) => {
-	console.log("Album Details::", currentAlbum)
 	return (
 		<div className="albumdetails">
 			<div className="albumphotos">
