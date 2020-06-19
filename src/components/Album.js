@@ -4,8 +4,8 @@ const Album = ({currentAlbum, handleSetCurrentAlbum, index}) => {
 	let albumThumbnail = {};
 	if(currentAlbum !== null && currentAlbum !== undefined) {
 		albumThumbnail = {
-			"title": currentAlbum["1"][0].title,
-			"photo": currentAlbum["1"][0].thumbnailUrl
+			"title": currentAlbum[0].title,
+			"photo": currentAlbum[0].thumbnailUrl
 		}
 	}
 

@@ -6,7 +6,7 @@ import AlbumDetails from './AlbumDetails';
 
 const Carousel = () => {
 	const AlbumContext = useContext(CarouselContext);
-	const [currentAlbum, setCurrentAlbum] = useState({});
+	const [currentAlbum, setCurrentAlbum] = useState([]);
 	const [currentAlbumIndex, setCurrentAlbumIndex] = useState(1);
 
 	const albums = AlbumContext.albums;
@@ -19,7 +19,7 @@ const Carousel = () => {
 			setCurrentAlbumIndex(prevIndex => prevIndex + 1);
 		}
 		
-		setCurrentAlbum({});
+		setCurrentAlbum([]);
 	};
 
 	const previousAlbum = () => {
@@ -29,7 +29,7 @@ const Carousel = () => {
 			setCurrentAlbumIndex(prevIndex => prevIndex - 1);
 		}
 		
-		setCurrentAlbum({});
+		setCurrentAlbum([]);
 	};
 
 	const handleSetCurrentAlbum = (clickedAlbum) => {
@@ -49,7 +49,7 @@ const Carousel = () => {
 				currentAlbumIndex={currentAlbumIndex-1}
 			/>
 			{
-				(Object.keys(currentAlbum).length === 0) ? 
+				(currentAlbum.length === 0) ? 
 				null : 
 				<AlbumDetails currentAlbum={currentAlbum} />
 			}

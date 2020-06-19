@@ -1,5 +1,5 @@
 import '../styles/CarouselHome.scss';
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import Axios from 'axios';
 import Carousel from './Carousel';
 
