@@ -47,7 +47,8 @@ $i: 0;
 
 .albumphotos {
     margin-top: 20%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+}
+
+.photo {
+    margin-bottom: 30px;
 }

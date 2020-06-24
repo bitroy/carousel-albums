@@ -49,9 +49,7 @@ const Carousel = () => {
 				currentAlbumIndex={currentAlbumIndex-1}
 			/>
 			{
-				(currentAlbum.length === 0) ? 
-				null : 
-				<AlbumDetails currentAlbum={currentAlbum} />
+				(currentAlbum.length === 0) ? null : <AlbumDetails currentAlbum={currentAlbum} />
 			}
 		</div>			
     );
