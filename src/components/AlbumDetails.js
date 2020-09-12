@@ -45,7 +45,7 @@ const AlbumDetails = ({currentAlbum}) => {
 			pageStart={0}
 			loadMore={loadMore}
 			hasMore={hasMoreImages}
-			loader={<div className="loader"><strong>Loading ...</strong></div>}
+			loader={<div className="loader" key={0}><strong>Loading ...</strong></div>}
 			useWindow={false}>
 			{showItems()}
 		</InfiniteScroll>
