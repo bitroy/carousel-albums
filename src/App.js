@@ -1,6 +1,6 @@
-import './styles/App.css';
-import React from 'react';
-import CarouselHome from './components/CarouselHome';
+import "./styles/App.css";
+import React from "react";
+import CarouselHome from "./components/CarouselHome";
 
 function App() {
   return (
