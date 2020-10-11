@@ -12,7 +12,6 @@ const CarouselHome = () => {
 	const [error, setError] = useState('');
 
 	useEffect(() => {
-		document.title = "Carousel Albums";
 		Axios
 			.get("https://jsonplaceholder.typicode.com/photos")
 			.then((response) => {
